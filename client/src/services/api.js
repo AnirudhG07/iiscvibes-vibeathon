@@ -136,9 +136,6 @@ export const adminAPI = {
   generateQR: (userId, eventId) => api.post(`/admin/generate-qr/${userId}`, { eventId }),
   scanQR: (qrData, location) => api.post('/admin/scan-qr', { qrData, location }),
   getQRScans: () => api.get('/admin/qr-scans'),
-  
-  // User Management
-  getUsers: () => api.get('/admin/users'),
   approveUser: (userId) => api.put(`/admin/users/${userId}/approve`),
   rejectUser: (userId) => api.put(`/admin/users/${userId}/reject`),
   deactivateUser: (userId) => api.put(`/admin/users/${userId}/deactivate`),
