@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "agenda-1758965326264",
+    "title": "mkiwfejoiferd",
+    "description": "frewdgverwergfregfee3gg3av3rdg34qge4g3rgewrggrtrfgsr",
+    "type": "session",
+    "startTime": "10:15",
+    "endTime": "12:10",
+    "location": "ROOM A",
+    "speaker": "Demo Speaker",
+    "sessionId": "39cfaab8-bc25-4626-8e8e-dc9ab71beaa8",
+    "track": "Track 1 - Technology Innovation",
+    "status": "draft",
+    "createdBy": "admin-user-001",
+    "createdAt": "2025-09-27T09:28:46.264Z",
+    "updatedAt": "2025-09-27T09:28:46.264Z"
+  }
+]

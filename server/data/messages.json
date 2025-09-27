@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "msg-1758965275694",
+    "subject": "TESTS",
+    "message": "TESTTESTTESTTESTTESTTESTTESTTEST",
+    "category": "session",
+    "priority": "high",
+    "status": "new",
+    "senderName": "Demo Speaker",
+    "senderEmail": "demo.speaker@vibeathon.com",
+    "senderRole": "speaker",
+    "senderId": "demo-speaker-001",
+    "createdAt": "2025-09-27T09:27:55.695Z",
+    "lastReply": null,
+    "replies": [],
+    "updatedAt": "2025-09-27T09:27:55.695Z"
+  }
+]

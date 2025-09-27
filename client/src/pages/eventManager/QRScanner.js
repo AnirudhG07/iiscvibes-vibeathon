@@ -115,8 +115,10 @@ const QRScanner = () => {
             setScanHistory(prev => [
               {
                 timestamp: new Date().toISOString(),
+                scannedAt: new Date().toISOString(),
                 qrData: code.data,
-                result: result.data,
+                message: result.data.message || 'Scanned successfully',
+                session: result.data.session,
                 method: 'file_upload'
               },
               ...prev
@@ -304,14 +306,14 @@ const QRScanner = () => {
           {scanResult ? (
             <div className="space-y-4">
               <div className="flex items-center justify-center mb-4">
-                {getStatusIcon(scanResult.message && scanResult.message.includes('successfully'))}
+                {getStatusIcon(scanResult.message && scanResult.message.includes && scanResult.message.includes('successfully'))}
               </div>
 
               <div className="text-center mb-4">
                 <p className={`font-medium ${
-                  scanResult.message && scanResult.message.includes('successfully') ? 'text-green-700' : 'text-red-700'
+                  scanResult.message && scanResult.message.includes && scanResult.message.includes('successfully') ? 'text-green-700' : 'text-red-700'
                 }`}>
-                  {scanResult.message}
+                  {scanResult.message || 'No message available'}
                 </p>
               </div>
 
@@ -364,7 +366,7 @@ const QRScanner = () => {
             {scanHistory.map((scan, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div className="flex items-center">
-                  {getStatusIcon(scan.message.includes('successfully'))}
+                  {getStatusIcon(scan.message && scan.message.includes && scan.message.includes('successfully'))}
                   <div className="ml-3">
                     <p className="font-medium text-gray-900">
                       {scan.session?.title || 'Unknown Session'}
@@ -376,9 +378,9 @@ const QRScanner = () => {
                 </div>
                 <div className="text-right">
                   <p className={`text-sm font-medium ${
-                    scan.message.includes('successfully') ? 'text-green-600' : 'text-red-600'
+                    scan.message && scan.message.includes && scan.message.includes('successfully') ? 'text-green-600' : 'text-red-600'
                   }`}>
-                    {scan.message.includes('successfully') ? 'Verified' : 'Failed'}
+                    {scan.message && scan.message.includes && scan.message.includes('successfully') ? 'Verified' : 'Failed'}
                   </p>
                 </div>
               </div>

@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": "email-1758965302578",
+    "timestamp": "2025-09-27T09:28:22.578Z",
+    "to": "demo.speaker@vibeathon.com",
+    "subject": "🎉 Your Session has been Approved!",
+    "html": "\n      <div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">\n        <h2 style=\"color: #10b981;\">🎉 Session Approved!</h2>\n        <p>Dear Demo Speaker,</p>\n        <p>Congra...",
+    "attachments": null,
+    "status": "sent"
+  },
+  {
+    "id": "email-1758965254911",
+    "timestamp": "2025-09-27T09:27:34.911Z",
+    "to": "demo.speaker@vibeathon.com",
+    "subject": "Session Submission Received",
+    "html": "\n      <div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">\n        <h2 style=\"color: #4f46e5;\">Session Submission Received</h2>\n        <p>Dear Demo Speaker,</p>\n        <p...",
+    "attachments": null,
+    "status": "sent"
+  }
+]
