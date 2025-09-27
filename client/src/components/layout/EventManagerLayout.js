@@ -10,6 +10,7 @@ import {
   ChartBarIcon,
   QrCodeIcon,
   ChatBubbleLeftRightIcon,
+  EnvelopeIcon,
   BellIcon,
   ArrowRightOnRectangleIcon,
   Bars3Icon,
@@ -31,6 +32,9 @@ const EventManagerLayout = () => {
     { name: 'Speaker Management', href: '/event-manager/speakers', icon: UsersIcon, current: location.pathname === '/event-manager/speakers' },
     { name: 'Change Requests', href: '/event-manager/change-requests', icon: ExclamationTriangleIcon, current: location.pathname === '/event-manager/change-requests' },
     { name: 'Feedback Analytics', href: '/event-manager/feedback', icon: ChartBarIcon, current: location.pathname === '/event-manager/feedback' },
+    { name: 'Messages', href: '/event-manager/messages', icon: ChatBubbleLeftRightIcon, current: location.pathname === '/event-manager/messages' },
+    { name: 'Email Logs', href: '/event-manager/email-logs', icon: EnvelopeIcon, current: location.pathname === '/event-manager/email-logs' },
+    { name: 'Email Demo', href: '/event-manager/email-demo', icon: EnvelopeIcon, current: location.pathname === '/event-manager/email-demo' },
     { name: 'QR Scanner', href: '/event-manager/qr-scanner', icon: QrCodeIcon, current: location.pathname === '/event-manager/qr-scanner' },
     { name: 'Communications', href: '/event-manager/communications', icon: ChatBubbleLeftRightIcon, current: location.pathname === '/event-manager/communications' },
   ];

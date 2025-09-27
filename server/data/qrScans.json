@@ -1,5 +1,13 @@
 [
   {
+    "id": "scan-1758963961060",
+    "sessionId": "ad156e6b-d4aa-44c4-8437-d36973bd2ceb",
+    "speakerId": "demo-speaker-001",
+    "scanTime": "2025-09-27T09:06:01.060Z",
+    "scannedBy": "admin-user-001",
+    "type": "session_verification"
+  },
+  {
     "id": "scan-1758963922585",
     "sessionId": "ad156e6b-d4aa-44c4-8437-d36973bd2ceb",
     "speakerId": "demo-speaker-001",

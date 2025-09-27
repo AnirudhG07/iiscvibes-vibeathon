@@ -304,12 +304,12 @@ const QRScanner = () => {
           {scanResult ? (
             <div className="space-y-4">
               <div className="flex items-center justify-center mb-4">
-                {getStatusIcon(scanResult.message.includes('successfully'))}
+                {getStatusIcon(scanResult.message && scanResult.message.includes('successfully'))}
               </div>
 
               <div className="text-center mb-4">
                 <p className={`font-medium ${
-                  scanResult.message.includes('successfully') ? 'text-green-700' : 'text-red-700'
+                  scanResult.message && scanResult.message.includes('successfully') ? 'text-green-700' : 'text-red-700'
                 }`}>
                   {scanResult.message}
                 </p>
