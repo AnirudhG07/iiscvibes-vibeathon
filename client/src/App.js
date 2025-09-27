@@ -15,7 +15,7 @@ import SpeakerProfile from './pages/speaker/Profile';
 import SessionSubmission from './pages/speaker/SessionSubmission';
 import MySessions from './pages/speaker/MySessions';
 import Agenda from './pages/speaker/Agenda';
-import SpeakerQR from './pages/speaker/QRCode';
+import SpeakerApplications from './pages/SpeakerApplications';
 import Documents from './pages/speaker/Documents';
 
 import EventManagerDashboard from './pages/eventManager/Dashboard';
@@ -27,7 +27,16 @@ import FeedbackAnalytics from './pages/eventManager/FeedbackAnalytics';
 import QRScanner from './pages/eventManager/QRScanner';
 import Communications from './pages/eventManager/Communications';
 
+// Admin pages
+import AdminDashboard from './pages/AdminDashboard';
+import AdminQRManagement from './pages/AdminQRManagement';
+import AdminUserManagement from './pages/AdminUserManagement';
+import AdminEventManagement from './pages/AdminEventManagement';
+import AdminApplicationManagement from './pages/AdminApplicationManagement';
+import AdminSettings from './pages/AdminSettings';
+
 // Layout components
+import AdminLayout from './components/layout/AdminLayout';
 import SpeakerLayout from './components/layout/SpeakerLayout';
 import EventManagerLayout from './components/layout/EventManagerLayout';
 import PublicLayout from './components/layout/PublicLayout';
@@ -78,7 +87,7 @@ const App = () => {
               <Route path="sessions/submit" element={<SessionSubmission />} />
               <Route path="sessions" element={<MySessions />} />
               <Route path="agenda" element={<Agenda />} />
-              <Route path="qr-code" element={<SpeakerQR />} />
+              <Route path="applications" element={<SpeakerApplications />} />
               <Route path="documents" element={<Documents />} />
             </Route>
 
@@ -96,6 +105,20 @@ const App = () => {
               <Route path="feedback" element={<FeedbackAnalytics />} />
               <Route path="qr-scanner" element={<QRScanner />} />
               <Route path="communications" element={<Communications />} />
+            </Route>
+
+            {/* Admin Routes */}
+            <Route path="/admin" element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUserManagement />} />
+              <Route path="events" element={<AdminEventManagement />} />
+              <Route path="applications" element={<AdminApplicationManagement />} />
+              <Route path="qr" element={<AdminQRManagement />} />
+              <Route path="settings" element={<AdminSettings />} />
             </Route>
 
             {/* Utility Routes */}

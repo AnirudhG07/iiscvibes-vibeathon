@@ -111,13 +111,14 @@ export const feedbackAPI = {
 
 // Events API
 export const eventsAPI = {
-  getAll: (params) => api.get('/events', { params }),
+  getEvents: () => api.get('/events'),
+  getEvent: (eventId) => api.get(`/events/${eventId}`),
+  createEvent: (eventData) => api.post('/events', eventData),
+  updateEvent: (eventId, eventData) => api.put(`/events/${eventId}`, eventData),
+  deleteEvent: (eventId) => api.delete(`/events/${eventId}`),
+  registerForEvent: (eventId, registrationData) => api.post(`/events/${eventId}/register`, registrationData),
+  getEventRegistrations: (eventId) => api.get(`/events/${eventId}/registrations`),
   getUpcoming: () => api.get('/events/upcoming'),
-  getById: (id) => api.get(`/events/${id}`),
-  create: (data) => api.post('/events', data),
-  update: (id, data) => api.put(`/events/${id}`, data),
-  register: (id) => api.post(`/events/${id}/register`),
-  getRegistrations: (id) => api.get(`/events/${id}/registrations`),
   getMyRegistrations: () => api.get('/events/my/registrations'),
 };
 
@@ -128,6 +129,26 @@ export const adminAPI = {
   getDashboardStats: () => api.get('/admin/dashboard-stats'),
   getUsers: (params) => api.get('/admin/users', { params }),
   updateUserStatus: (userId, isActive) => api.put(`/admin/users/${userId}/status`, { isActive }),
+  generateQR: (userId, eventId) => api.post(`/admin/generate-qr/${userId}`, { eventId }),
+  scanQR: (qrData, location) => api.post('/admin/scan-qr', { qrData, location }),
+  getQRScans: () => api.get('/admin/qr-scans'),
+  
+  // User Management
+  getUsers: () => api.get('/admin/users'),
+  approveUser: (userId) => api.put(`/admin/users/${userId}/approve`),
+  rejectUser: (userId) => api.put(`/admin/users/${userId}/reject`),
+  deactivateUser: (userId) => api.put(`/admin/users/${userId}/deactivate`),
+};
+
+// Event Applications API
+export const eventApplicationsAPI = {
+  applySpeaker: (eventId, applicationData) => api.post(`/event-applications/apply-speaker/${eventId}`, applicationData),
+  applyOrganizer: (eventId, applicationData) => api.post(`/event-applications/apply-organizer/${eventId}`, applicationData),
+  getMyApplications: () => api.get('/event-applications/my-applications'),
+  getAllApplications: () => api.get('/event-applications/all'),
+  getEventApplications: (eventId, params) => api.get(`/event-applications/event/${eventId}`, { params }),
+  reviewApplication: (applicationId, reviewData) => api.put(`/event-applications/review/${applicationId}`, reviewData),
+  getPendingCount: () => api.get('/event-applications/pending-count'),
 };
 
 export default api;

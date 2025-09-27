@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { EyeIcon, EyeSlashIcon, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const LoginPage = () => {
@@ -31,6 +31,8 @@ const LoginPage = () => {
           navigate('/speaker', { replace: true });
         } else if (result.user.role === 'event_manager') {
           navigate('/event-manager', { replace: true });
+        } else if (result.user.role === 'admin') {
+          navigate('/admin', { replace: true });
         } else {
           navigate(from, { replace: true });
         }
@@ -65,6 +67,8 @@ const LoginPage = () => {
           navigate('/speaker', { replace: true });
         } else if (result.user.role === 'event_manager') {
           navigate('/event-manager', { replace: true });
+        } else if (result.user.role === 'admin') {
+          navigate('/admin', { replace: true });
         }
       }
     } catch (error) {
@@ -137,9 +141,9 @@ const LoginPage = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5 text-gray-400" />
+                    <EyeOff className="h-5 w-5 text-gray-400" />
                   ) : (
-                    <EyeIcon className="h-5 w-5 text-gray-400" />
+                    <Eye className="h-5 w-5 text-gray-400" />
                   )}
                 </button>
               </div>

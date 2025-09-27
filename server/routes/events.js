@@ -250,4 +250,25 @@ router.get('/my/registrations', auth, async (req, res) => {
   }
 });
 
+// Delete event (admin only)
+router.delete('/:id', auth, requireRole(['admin']), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const events = await readJsonFile('events.json');
+    const eventIndex = events.findIndex(e => e.id === id);
+    
+    if (eventIndex === -1) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    
+    events.splice(eventIndex, 1);
+    await writeJsonFile('events.json', events);
+    
+    res.json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    res.status(500).json({ message: 'Failed to delete event' });
+  }
+});
+
 module.exports = router;

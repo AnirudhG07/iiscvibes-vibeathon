@@ -9,10 +9,14 @@
     "venue": "J.N. Tata Auditorium, Indian Institute of Science",
     "status": "upcoming",
     "registrationOpen": true,
+    "speakerApplicationOpen": true,
+    "organizerApplicationOpen": true,
     "maxAttendees": 1500,
     "currentAttendees": 847,
     "maxSpeakers": 50,
     "currentSpeakers": 23,
+    "maxOrganizers": 15,
+    "currentOrganizers": 8,
     "tracks": [
       "Track 1 - Technology Innovation",
       "Track 2 - AI & Machine Learning",
@@ -47,42 +51,184 @@
     "updatedAt": "2025-01-15T10:30:00.000Z"
   },
   {
-    "id": "tech-summit-2025",
-    "name": "Tech Summit 2025",
-    "description": "A focused summit on emerging technologies and startup ecosystem.",
-    "startDate": "2025-05-20T10:00:00.000Z",
-    "endDate": "2025-05-20T17:00:00.000Z",
+    "id": "ai-workshop-2025",
+    "name": "AI Workshop Series 2025",
+    "description": "Hands-on workshops covering the latest in AI and machine learning technologies.",
+    "startDate": "2025-02-10T10:00:00.000Z",
+    "endDate": "2025-02-11T17:00:00.000Z",
     "location": "IISc Bangalore, India",
-    "venue": "Faculty Hall, Indian Institute of Science",
+    "venue": "Computer Science Department, IISc",
     "status": "upcoming",
     "registrationOpen": true,
-    "maxAttendees": 500,
-    "currentAttendees": 123,
-    "maxSpeakers": 20,
-    "currentSpeakers": 8,
+    "speakerApplicationOpen": true,
+    "organizerApplicationOpen": false,
+    "maxAttendees": 300,
+    "currentAttendees": 156,
+    "maxSpeakers": 15,
+    "currentSpeakers": 7,
+    "maxOrganizers": 8,
+    "currentOrganizers": 5,
     "tracks": [
-      "Startup Ecosystem",
-      "Emerging Technologies",
-      "Investment & Funding"
+      "Machine Learning Fundamentals",
+      "Deep Learning Applications",
+      "NLP and Language Models",
+      "Computer Vision"
     ],
     "sessionTypes": [
-      "Talk",
-      "Panel Discussion",
-      "Pitch Session"
+      "Workshop",
+      "Hands-on Lab",
+      "Demo"
     ],
     "organizers": [
-      "admin-user-001"
+      "demo-organizer-001"
     ],
-    "websiteUrl": "https://techsummit2025.iiscvibes.com",
+    "websiteUrl": "https://aiworkshop.iiscvibes.com",
     "socialMedia": {
-      "twitter": "@techsummit2025",
-      "linkedin": "tech-summit-2025"
+      "twitter": "@aiworkshop2025",
+      "linkedin": "ai-workshop-2025"
     },
     "sponsorshipTiers": [
       "Gold",
       "Silver"
     ],
-    "createdAt": "2025-01-10T00:00:00.000Z",
-    "updatedAt": "2025-01-20T14:20:00.000Z"
+    "createdAt": "2025-01-05T00:00:00.000Z",
+    "updatedAt": "2025-01-25T16:45:00.000Z"
+  },
+  {
+    "id": "startup-pitch-fest",
+    "name": "Startup Pitch Fest 2025",
+    "description": "Platform for emerging startups to pitch their ideas to investors and industry experts.",
+    "startDate": "2025-04-08T09:00:00.000Z",
+    "endDate": "2025-04-08T18:00:00.000Z",
+    "location": "IISc Bangalore, India",
+    "venue": "Main Auditorium, Indian Institute of Science",
+    "status": "upcoming",
+    "registrationOpen": true,
+    "speakerApplicationOpen": true,
+    "organizerApplicationOpen": true,
+    "maxAttendees": 800,
+    "currentAttendees": 234,
+    "maxSpeakers": 30,
+    "currentSpeakers": 12,
+    "maxOrganizers": 10,
+    "currentOrganizers": 4,
+    "tracks": [
+      "Tech Startups",
+      "Social Impact",
+      "FinTech",
+      "HealthTech"
+    ],
+    "sessionTypes": [
+      "Pitch",
+      "Panel Discussion",
+      "Investor Talk",
+      "Networking"
+    ],
+    "organizers": [
+      "admin-user-001"
+    ],
+    "websiteUrl": "https://pitchfest.iiscvibes.com",
+    "socialMedia": {
+      "twitter": "@pitchfest2025",
+      "linkedin": "startup-pitch-fest"
+    },
+    "sponsorshipTiers": [
+      "Platinum",
+      "Gold",
+      "Silver"
+    ],
+    "createdAt": "2025-01-08T00:00:00.000Z",
+    "updatedAt": "2025-01-28T11:20:00.000Z"
+  },
+  {
+    "id": "web-dev-bootcamp",
+    "name": "Web Development Bootcamp",
+    "description": "Intensive bootcamp covering modern web development technologies and best practices.",
+    "startDate": "2025-06-15T09:00:00.000Z",
+    "endDate": "2025-06-17T17:00:00.000Z",
+    "location": "IISc Bangalore, India",
+    "venue": "CDS Seminar Hall, Indian Institute of Science",
+    "status": "upcoming",
+    "registrationOpen": true,
+    "speakerApplicationOpen": true,
+    "organizerApplicationOpen": true,
+    "maxAttendees": 600,
+    "currentAttendees": 89,
+    "maxSpeakers": 25,
+    "currentSpeakers": 6,
+    "maxOrganizers": 12,
+    "currentOrganizers": 3,
+    "tracks": [
+      "Frontend Technologies",
+      "Backend Development",
+      "Full Stack Projects",
+      "DevOps & Deployment"
+    ],
+    "sessionTypes": [
+      "Workshop",
+      "Code-along",
+      "Project Showcase",
+      "Q&A"
+    ],
+    "organizers": [],
+    "websiteUrl": "https://webbootcamp.iiscvibes.com",
+    "socialMedia": {
+      "twitter": "@webbootcamp2025",
+      "linkedin": "web-dev-bootcamp"
+    },
+    "sponsorshipTiers": [
+      "Gold",
+      "Silver",
+      "Bronze"
+    ],
+    "createdAt": "2025-01-12T00:00:00.000Z",
+    "updatedAt": "2025-01-30T09:15:00.000Z"
+  },
+  {
+    "id": "data-science-symposium",
+    "name": "Data Science Symposium 2025",
+    "description": "Annual symposium bringing together data scientists, researchers, and industry professionals.",
+    "startDate": "2025-07-22T08:30:00.000Z",
+    "endDate": "2025-07-23T17:30:00.000Z",
+    "location": "IISc Bangalore, India",
+    "venue": "JRD Tata Memorial Library, IISc",
+    "status": "upcoming",
+    "registrationOpen": true,
+    "speakerApplicationOpen": true,
+    "organizerApplicationOpen": false,
+    "maxAttendees": 1000,
+    "currentAttendees": 67,
+    "maxSpeakers": 40,
+    "currentSpeakers": 4,
+    "maxOrganizers": 18,
+    "currentOrganizers": 12,
+    "tracks": [
+      "Big Data Analytics",
+      "Machine Learning in Industry",
+      "Data Visualization",
+      "Ethics in Data Science"
+    ],
+    "sessionTypes": [
+      "Keynote",
+      "Technical Talk",
+      "Panel Discussion",
+      "Poster Session"
+    ],
+    "organizers": [
+      "demo-organizer-001"
+    ],
+    "websiteUrl": "https://datasymposium.iiscvibes.com",
+    "socialMedia": {
+      "twitter": "@datasymposium25",
+      "linkedin": "data-science-symposium"
+    },
+    "sponsorshipTiers": [
+      "Platinum",
+      "Gold",
+      "Silver",
+      "Bronze"
+    ],
+    "createdAt": "2025-01-15T00:00:00.000Z",
+    "updatedAt": "2025-02-01T14:30:00.000Z"
   }
 ]

@@ -28,7 +28,7 @@ const SpeakerLayout = () => {
     { name: 'Submit Session', href: '/speaker/sessions/submit', icon: DocumentTextIcon, current: location.pathname === '/speaker/sessions/submit' },
     { name: 'My Sessions', href: '/speaker/sessions', icon: CalendarIcon, current: location.pathname === '/speaker/sessions' },
     { name: 'Event Agenda', href: '/speaker/agenda', icon: CalendarIcon, current: location.pathname === '/speaker/agenda' },
-    { name: 'QR Codes', href: '/speaker/qr-code', icon: QrCodeIcon, current: location.pathname === '/speaker/qr-code' },
+    { name: 'My Applications', href: '/speaker/applications', icon: DocumentTextIcon, current: location.pathname === '/speaker/applications' },
     { name: 'Documents', href: '/speaker/documents', icon: FolderIcon, current: location.pathname === '/speaker/documents' },
   ];
 

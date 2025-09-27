@@ -15,6 +15,7 @@ const qrRoutes = require('./routes/qr');
 const feedbackRoutes = require('./routes/feedback');
 const eventsRoutes = require('./routes/events');
 const adminRoutes = require('./routes/admin');
+const eventApplicationsRoutes = require('./routes/eventApplications');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -54,6 +55,7 @@ app.use('/api/qr', qrRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/events', eventsRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/event-applications', eventApplicationsRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
