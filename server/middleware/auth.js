@@ -48,7 +48,7 @@ const requireRole = (roles) => {
 };
 
 const requireSpeaker = requireRole(['speaker']);
-const requireEventManager = requireRole(['event_manager']); // Keep for backward compatibility
+const requireEventManager = requireRole(['event_manager', 'admin']); // Allow both event managers and admins
 const requireAdmin = requireRole(['admin']);
 const requireOrganizer = requireRole(['organizer']);
 const requireApproved = requireRole(['speaker', 'organizer', 'admin']);
