@@ -16,9 +16,7 @@ const MySessions = () => {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        console.log('Fetching sessions...');
         const response = await api.get('/sessions/my-sessions');
-        console.log('Sessions response:', response.data);
         setSessions(response.data.sessions || []);
         setLoading(false);
       } catch (err) {
@@ -86,7 +84,14 @@ const MySessions = () => {
   return (
     <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">My Sessions</h1>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">My Sessions</h1>
+            <p className="text-sm text-gray-500">
+              Loaded {sessions.length} session(s) | 
+              Approved: {sessions.filter(s => s.status === 'approved').length} | 
+              With QR: {sessions.filter(s => s.qrCode).length}
+            </p>
+          </div>
           <Link
             to="/speaker/sessions/submit"
             className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700"
@@ -168,35 +173,57 @@ const MySessions = () => {
                       )}
 
                       {/* QR Code Section for Approved Sessions */}
-                      {console.log('Session:', session.id, 'Status:', session.status, 'QR Code:', !!session.qrCode)}
-                      {session.status === 'approved' && session.qrCode && (
-                        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="text-sm font-medium text-green-900 mb-1 flex items-center">
-                                <QrCode className="w-4 h-4 mr-2" />
-                                Session QR Code Available
-                              </h4>
-                              <p className="text-sm text-green-700">
-                                Your session QR code is ready. Show this to organizers for verification.
+                      {session.status === 'approved' && (
+                        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
+                          <h4 className="text-sm font-medium text-blue-900 mb-1">Session Status: Approved ✓</h4>
+                          <p className="text-sm text-blue-700 mb-2">
+                            Your session has been approved and scheduled.
+                          </p>
+                          {session.qrCode ? (
+                            <div className="bg-green-50 border border-green-200 rounded p-3">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <h5 className="text-sm font-medium text-green-900 mb-1 flex items-center">
+                                    <QrCode className="w-4 h-4 mr-2" />
+                                    QR Code Available
+                                  </h5>
+                                  <p className="text-sm text-green-700">
+                                    Show this to organizers for verification.
+                                  </p>
+                                </div>
+                                <div className="flex space-x-2">
+                                  <button
+                                    onClick={() => openQRModal(session)}
+                                    className="inline-flex items-center px-3 py-1 border border-green-300 rounded-md text-sm font-medium text-green-700 bg-white hover:bg-green-50"
+                                  >
+                                    <Eye className="w-4 h-4 mr-1" />
+                                    View
+                                  </button>
+                                  <button
+                                    onClick={() => downloadQRCode(session)}
+                                    className="inline-flex items-center px-3 py-1 border border-green-300 rounded-md text-sm font-medium text-green-700 bg-white hover:bg-green-50"
+                                  >
+                                    <Download className="w-4 h-4 mr-1" />
+                                    Download
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="bg-yellow-50 border border-yellow-200 rounded p-3">
+                              <p className="text-sm text-yellow-700">
+                                QR code is being generated... Please refresh the page in a moment.
                               </p>
                             </div>
-                            <div className="flex space-x-2">
-                              <button
-                                onClick={() => openQRModal(session)}
-                                className="inline-flex items-center px-3 py-1 border border-green-300 rounded-md text-sm font-medium text-green-700 bg-white hover:bg-green-50"
-                              >
-                                <Eye className="w-4 h-4 mr-1" />
-                                View
-                              </button>
-                              <button
-                                onClick={() => downloadQRCode(session)}
-                                className="inline-flex items-center px-3 py-1 border border-green-300 rounded-md text-sm font-medium text-green-700 bg-white hover:bg-green-50"
-                              >
-                                <Download className="w-4 h-4 mr-1" />
-                                Download
-                              </button>
-                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* Old QR Code Section - keeping for backup */}
+                      {session.status === 'approved' && session.qrCode && false && (
+                        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
+                          <div className="hidden">
+                            {/* This section is disabled - using new design above */}
                           </div>
                         </div>
                       )}

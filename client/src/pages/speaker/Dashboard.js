@@ -13,7 +13,7 @@ import {
   StarIcon,
   ArrowRightIcon
 } from '@heroicons/react/24/outline';
-import { speakerAPI, eventsAPI } from '../../services/api';
+import { speakerAPI } from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';
 
 const Dashboard = () => {
@@ -27,13 +27,7 @@ const Dashboard = () => {
     }
   );
 
-  const { data: upcomingEvents, isLoading: eventsLoading } = useQuery(
-    'upcoming-events',
-    eventsAPI.getUpcoming,
-    {
-      select: (response) => response.data.events
-    }
-  );
+
 
   if (isLoading) {
     return (
@@ -242,66 +236,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Upcoming Events */}
-      {!eventsLoading && upcomingEvents?.length > 0 && (
-        <div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Upcoming Events</h2>
-            <button className="text-primary-600 hover:text-primary-700 font-medium">
-              View All Events
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {upcomingEvents.slice(0, 2).map((event, index) => (
-              <motion.div
-                key={event.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.0 + index * 0.1 }}
-                className="card hover:shadow-strong transition-all duration-300"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                      {event.name}
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-2">
-                      {new Date(event.startDate).toLocaleDateString('en-US', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </p>
-                    <p className="text-gray-500 text-xs">
-                      📍 {event.location}
-                    </p>
-                  </div>
-                  <span className="badge badge-success">
-                    {event.status.toUpperCase()}
-                  </span>
-                </div>
-                <p className="text-gray-600 text-sm mb-4">
-                  {event.description}
-                </p>
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center space-x-4">
-                    <span className="text-gray-500">
-                      👥 {event.currentAttendees}/{event.maxAttendees}
-                    </span>
-                    <span className="text-gray-500">
-                      🎤 {event.currentSpeakers}/{event.maxSpeakers}
-                    </span>
-                  </div>
-                  <button className="text-primary-600 hover:text-primary-700 font-medium">
-                    Learn More
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      )}
+
 
       {/* Event Status */}
       <motion.div
