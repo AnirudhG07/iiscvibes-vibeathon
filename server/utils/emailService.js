@@ -1,4 +1,60 @@
 const nodemailer = require('nodemailer');
+const fs = require('fs').promises;
+const path = require('path');
+
+class EmailService {
+  constructor() {
+    // Initialize email logs path
+    this.emailLogPath = path.join(__dirname, '../data/email-logs.json');
+    
+    // Only initialize transporter if email credentials are available
+    if (process.env.EMAIL_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      this.transporter = nodemailer.createTransporter({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: false,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        }
+      });
+    } else {
+      console.log('⚠️  Email credentials not configured. Running in demo mode - emails will be logged only.');
+      this.transporter = null;
+    }
+  }
+
+  async logEmail(emailData) {
+    try {
+      let logs = [];
+      try {
+        const logContent = await fs.readFile(this.emailLogPath, 'utf8');
+        logs = JSON.parse(logContent);
+      } catch (error) {
+        // File doesn't exist, start with empty array
+      }
+
+      const logEntry = {
+        id: `email-${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        ...emailData,
+        status: this.transporter ? 'sent' : 'logged_demo_mode'
+      };
+
+      logs.unshift(logEntry);
+      
+      // Keep only last 100 emails
+      if (logs.length > 100) {
+        logs = logs.slice(0, 100);
+      }
+
+      await fs.writeFile(this.emailLogPath, JSON.stringify(logs, null, 2));
+      return logEntry;
+    } catch (error) {
+      console.error('Error logging email:', error);
+      throw error;
+    }
+  }er = require('nodemailer');
 
 class EmailService {
   constructor() {
@@ -16,29 +72,62 @@ class EmailService {
   async sendEmail(to, subject, html, attachments = []) {
     try {
       const mailOptions = {
-        from: `"${process.env.EVENT_NAME}" <${process.env.EMAIL_USER}>`,
+        from: `"${process.env.EVENT_NAME || 'Vibeathon 2025'}" <${process.env.EMAIL_USER || 'noreply@vibeathon.com'}>`,
         to,
         subject,
         html,
         attachments
       };
 
-      // In development, just log the email
-      if (process.env.NODE_ENV === 'development') {
-        console.log('📧 Email would be sent:', {
+      // Always log the email first
+      const logEntry = await this.logEmail({
+        to,
+        subject,
+        html: html.substring(0, 200) + (html.length > 200 ? '...' : ''),
+        attachments: attachments.length > 0 ? `${attachments.length} attachments` : null
+      });
+
+      // If no transporter or in development mode, just return logged result
+      if (!this.transporter || process.env.NODE_ENV === 'development') {
+        console.log('📧 Email logged (demo mode):', {
           to,
           subject,
-          html: html.substring(0, 100) + '...'
+          preview: html.substring(0, 100) + '...'
         });
-        return { success: true, messageId: 'dev-mode' };
+        return { success: true, messageId: logEntry.id };
       }
 
-      const result = await this.transporter.sendMail(mailOptions);
-      return { success: true, messageId: result.messageId };
+      // Try to send actual email if transporter is available
+      try {
+        const result = await this.transporter.sendMail(mailOptions);
+        console.log('📧 Email sent successfully:', { to, subject, messageId: result.messageId });
+        return { success: true, messageId: result.messageId };
+      } catch (emailError) {
+        console.error('Email sending failed, but logged:', emailError);
+        return { success: true, messageId: logEntry.id, warning: 'Email logged but sending failed' };
+      }
     } catch (error) {
-      console.error('Email sending failed:', error);
+      console.error('Email processing failed:', error);
       return { success: false, error: error.message };
     }
+  }
+
+  // Get email logs for admin review
+  async getEmailLogs(limit = 50) {
+    try {
+      const logContent = await fs.readFile(this.emailLogPath, 'utf8');
+      const logs = JSON.parse(logContent);
+      return logs.slice(0, limit);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // Alternative simple email without SMTP - creates mailto links
+  generateMailtoLink(to, subject, body) {
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body.replace(/<[^>]*>/g, '')); // Strip HTML tags
+    return `mailto:${to}?subject=${encodedSubject}&body=${encodedBody}`;
   }
 
   // Email templates

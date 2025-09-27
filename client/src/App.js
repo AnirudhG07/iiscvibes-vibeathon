@@ -14,6 +14,8 @@ import SpeakerDashboard from './pages/speaker/Dashboard';
 import SpeakerProfile from './pages/speaker/Profile';
 import SessionSubmission from './pages/speaker/SessionSubmission';
 import MySessions from './pages/speaker/MySessions';
+import SessionDetails from './pages/speaker/SessionDetails';
+import ContactAdmin from './pages/speaker/ContactAdmin';
 import Agenda from './pages/speaker/Agenda';
 import Documents from './pages/speaker/Documents';
 
@@ -23,6 +25,9 @@ import AgendaBuilder from './pages/eventManager/AgendaBuilder';
 import SpeakerManagement from './pages/eventManager/SpeakerManagement';
 import ChangeRequests from './pages/eventManager/ChangeRequests';
 import FeedbackAnalytics from './pages/eventManager/FeedbackAnalytics';
+import MessagesManagement from './pages/eventManager/MessagesManagement';
+import EmailLogs from './pages/eventManager/EmailLogs';
+import EmailDemo from './pages/eventManager/EmailDemo';
 import QRScanner from './pages/eventManager/QRScanner';
 import Communications from './pages/eventManager/Communications';
 
@@ -78,6 +83,8 @@ const App = () => {
               <Route path="profile" element={<SpeakerProfile />} />
               <Route path="sessions/submit" element={<SessionSubmission />} />
               <Route path="sessions" element={<MySessions />} />
+              <Route path="session/:id" element={<SessionDetails />} />
+              <Route path="contact-admin" element={<ContactAdmin />} />
               <Route path="agenda" element={<Agenda />} />
               <Route path="documents" element={<Documents />} />
             </Route>
@@ -94,6 +101,9 @@ const App = () => {
               <Route path="speakers" element={<SpeakerManagement />} />
               <Route path="change-requests" element={<ChangeRequests />} />
               <Route path="feedback" element={<FeedbackAnalytics />} />
+              <Route path="messages" element={<MessagesManagement />} />
+              <Route path="email-logs" element={<EmailLogs />} />
+              <Route path="email-demo" element={<EmailDemo />} />
               <Route path="qr-scanner" element={<QRScanner />} />
               <Route path="communications" element={<Communications />} />
             </Route>

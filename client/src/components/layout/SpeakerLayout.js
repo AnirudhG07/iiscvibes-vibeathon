@@ -12,7 +12,8 @@ import {
   ArrowRightOnRectangleIcon,
   Bars3Icon,
   XMarkIcon,
-  StarIcon
+  StarIcon,
+  ChatBubbleLeftRightIcon
 } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -29,6 +30,7 @@ const SpeakerLayout = () => {
     { name: 'My Sessions', href: '/speaker/sessions', icon: CalendarIcon, current: location.pathname === '/speaker/sessions' },
     { name: 'Event Agenda', href: '/speaker/agenda', icon: CalendarIcon, current: location.pathname === '/speaker/agenda' },
     { name: 'Documents', href: '/speaker/documents', icon: FolderIcon, current: location.pathname === '/speaker/documents' },
+    { name: 'Contact Admin', href: '/speaker/contact-admin', icon: ChatBubbleLeftRightIcon, current: location.pathname === '/speaker/contact-admin' },
   ];
 
   const handleLogout = () => {

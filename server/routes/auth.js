@@ -78,11 +78,17 @@ router.post('/register', validateRequest(schemas.register), async (req, res) => 
     const newUser = await addToJsonFile('users.json', userData);
 
     // Send welcome email
-    await emailService.sendEmail(
-      email,
-      `Welcome to ${process.env.EVENT_NAME}!`,
-      emailService.getRegistrationConfirmationTemplate(name, process.env.EVENT_NAME)
-    );
+    try {
+      await emailService.sendEmail(
+        email,
+        `Welcome to ${process.env.EVENT_NAME || 'Vibeathon 2025'}!`,
+        emailService.getRegistrationConfirmationTemplate(name, process.env.EVENT_NAME || 'Vibeathon 2025')
+      );
+      console.log(`📧 Registration email sent/logged for: ${email}`);
+    } catch (emailError) {
+      console.error('Failed to send registration email:', emailError);
+      // Don't fail registration if email fails
+    }
 
     // Generate JWT token
     const token = jwt.sign(
