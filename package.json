@@ -5,16 +5,25 @@
   "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && npm run dev", 
+    "server": "cd server && npm run dev",
     "client": "cd client && npm start",
-    "build": "cd client && npm install && npm run build",
+    "build": "cd client && npm run build",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
     "start": "cd server && npm start"
   },
-  "keywords": ["event-management", "speakers", "hackathon", "vibeathon"],
+  "keywords": [
+    "event-management",
+    "speakers",
+    "hackathon",
+    "vibeathon"
+  ],
   "author": "Vibeathon Team",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "jsqr": "^1.4.0",
+    "recharts": "^3.2.1"
   }
 }

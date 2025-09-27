@@ -8,6 +8,11 @@ const emailService = require('../utils/emailService');
 
 const router = express.Router();
 
+// Test endpoint
+router.get('/test', (req, res) => {
+  res.json({ message: 'Sessions API is working', timestamp: new Date().toISOString() });
+});
+
 // Submit new session (Speaker only)
 router.post('/submit', auth, requireSpeaker, validateRequest(schemas.sessionSubmission), async (req, res) => {
   try {
@@ -76,9 +81,21 @@ router.post('/submit', auth, requireSpeaker, validateRequest(schemas.sessionSubm
 // Get speaker's sessions
 router.get('/my-sessions', auth, requireSpeaker, async (req, res) => {
   try {
+    console.log('Fetching sessions for user:', req.user.id, req.user.name);
     const sessions = await filterInJsonFile('sessions.json', session => 
       session.speakerId === req.user.id
     );
+    
+    console.log('Found sessions:', sessions.length);
+    sessions.forEach((session, index) => {
+      console.log(`Session ${index + 1}:`, {
+        id: session.id,
+        title: session.title,
+        status: session.status,
+        hasQrCode: !!session.qrCode,
+        qrCodeLength: session.qrCode ? session.qrCode.length : 0
+      });
+    });
 
     res.json({ sessions });
   } catch (error) {

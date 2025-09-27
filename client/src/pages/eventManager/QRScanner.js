@@ -13,7 +13,8 @@ import {
   Clock,
   ScanLine
 } from 'lucide-react';
-import api from '../../services/api';
+import api, { qrAPI } from '../../services/api';
+import toast from 'react-hot-toast';
 
 const QRScanner = () => {
   const [scanMethod, setScanMethod] = useState('manual'); // 'camera', 'upload', 'manual'
@@ -58,17 +59,88 @@ const QRScanner = () => {
     const file = event.target.files[0];
     if (!file) return;
 
+    // Check file size (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      setError('File size too large. Please choose a file smaller than 10MB.');
+      return;
+    }
+
+    // Check file type
+    if (!file.type.startsWith('image/')) {
+      setError('Please upload a valid image file (PNG, JPG, JPEG, WebP).');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
     try {
-      // In a real application, you would use a QR code reader library to decode the image
-      // For now, we'll simulate this with a placeholder
-      setError('File upload QR scanning is not yet implemented. Please use manual input.');
+      // Create a promise-based image loader
+      const loadImage = (file) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          const reader = new FileReader();
+          
+          reader.onload = (e) => {
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error('Failed to load image'));
+            img.src = e.target.result;
+          };
+          
+          reader.onerror = () => reject(new Error('Failed to read file'));
+          reader.readAsDataURL(file);
+        });
+      };
+
+      const img = await loadImage(file);
+      
+      // Create canvas and draw image
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      
+      // Try to decode QR code
+      if (window.jsQR) {
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = window.jsQR(imageData.data, imageData.width, imageData.height);
+        
+        if (code) {
+          setManualInput(code.data);
+          // Automatically scan the detected QR code
+          try {
+            const result = await qrAPI.scanQR(code.data);
+            setScanResult(result.data);
+            setScanHistory(prev => [
+              {
+                timestamp: new Date().toISOString(),
+                qrData: code.data,
+                result: result.data,
+                method: 'file_upload'
+              },
+              ...prev
+            ]);
+            toast.success('QR code scanned successfully from uploaded image!');
+          } catch (scanError) {
+            setError(`QR code detected but scan failed: ${scanError.response?.data?.message || scanError.message}`);
+          }
+        } else {
+          setError('No QR code found in the uploaded image. Please ensure the QR code is clear and well-lit.');
+        }
+      } else {
+        setError('QR code scanning library not loaded. Please refresh the page and try again.');
+      }
+      
     } catch (error) {
-      setError('Failed to read QR code from file');
+      console.error('File upload error:', error);
+      setError(`Failed to process uploaded file: ${error.message}`);
     } finally {
       setLoading(false);
+      // Clear the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
@@ -178,7 +250,8 @@ const QRScanner = () => {
               >
                 <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-600">Click to upload QR code image</p>
-                <p className="text-sm text-gray-500 mt-1">PNG, JPG, or other image formats</p>
+                <p className="text-sm text-gray-500 mt-1">PNG, JPG, JPEG, or WebP formats</p>
+                <p className="text-xs text-gray-400 mt-2">Max file size: 10MB</p>
               </div>
               <input
                 ref={fileInputRef}
@@ -187,6 +260,11 @@ const QRScanner = () => {
                 onChange={handleFileUpload}
                 className="hidden"
               />
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <p className="text-blue-700 text-sm">
+                  <strong>Tip:</strong> For best results, ensure the QR code is clearly visible and well-lit in the image.
+                </p>
+              </div>
             </div>
           )}
 

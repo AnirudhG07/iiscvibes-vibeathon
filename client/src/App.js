@@ -15,7 +15,6 @@ import SpeakerProfile from './pages/speaker/Profile';
 import SessionSubmission from './pages/speaker/SessionSubmission';
 import MySessions from './pages/speaker/MySessions';
 import Agenda from './pages/speaker/Agenda';
-import SpeakerApplications from './pages/SpeakerApplications';
 import Documents from './pages/speaker/Documents';
 
 import EventManagerDashboard from './pages/eventManager/Dashboard';
@@ -80,7 +79,6 @@ const App = () => {
               <Route path="sessions/submit" element={<SessionSubmission />} />
               <Route path="sessions" element={<MySessions />} />
               <Route path="agenda" element={<Agenda />} />
-              <Route path="applications" element={<SpeakerApplications />} />
               <Route path="documents" element={<Documents />} />
             </Route>
 
