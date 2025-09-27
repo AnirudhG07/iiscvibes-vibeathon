@@ -27,16 +27,9 @@ import FeedbackAnalytics from './pages/eventManager/FeedbackAnalytics';
 import QRScanner from './pages/eventManager/QRScanner';
 import Communications from './pages/eventManager/Communications';
 
-// Admin pages
-import AdminDashboard from './pages/AdminDashboard';
-import AdminQRManagement from './pages/AdminQRManagement';
-import AdminUserManagement from './pages/AdminUserManagement';
-import AdminEventManagement from './pages/AdminEventManagement';
-import AdminApplicationManagement from './pages/AdminApplicationManagement';
-import AdminSettings from './pages/AdminSettings';
+// Admin routes are now handled by Event Manager components
 
 // Layout components
-import AdminLayout from './components/layout/AdminLayout';
 import SpeakerLayout from './components/layout/SpeakerLayout';
 import EventManagerLayout from './components/layout/EventManagerLayout';
 import PublicLayout from './components/layout/PublicLayout';
@@ -91,9 +84,9 @@ const App = () => {
               <Route path="documents" element={<Documents />} />
             </Route>
 
-            {/* Event Manager Routes */}
+            {/* Event Manager Routes - Accessible by both event managers and admins */}
             <Route path="/event-manager" element={
-              <ProtectedRoute allowedRoles={['event_manager']}>
+              <ProtectedRoute allowedRoles={['event_manager', 'admin']}>
                 <EventManagerLayout />
               </ProtectedRoute>
             }>
@@ -107,19 +100,12 @@ const App = () => {
               <Route path="communications" element={<Communications />} />
             </Route>
 
-            {/* Admin Routes */}
+            {/* Admin Routes - Redirected to Event Manager */}
             <Route path="/admin" element={
               <ProtectedRoute allowedRoles={['admin']}>
-                <AdminLayout />
+                <Navigate to="/event-manager" replace />
               </ProtectedRoute>
-            }>
-              <Route index element={<AdminDashboard />} />
-              <Route path="users" element={<AdminUserManagement />} />
-              <Route path="events" element={<AdminEventManagement />} />
-              <Route path="applications" element={<AdminApplicationManagement />} />
-              <Route path="qr" element={<AdminQRManagement />} />
-              <Route path="settings" element={<AdminSettings />} />
-            </Route>
+            } />
 
             {/* Utility Routes */}
             <Route path="/unauthorized" element={
