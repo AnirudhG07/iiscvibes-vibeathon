@@ -12,7 +12,7 @@ import {
   ArrowRightOnRectangleIcon,
   Bars3Icon,
   XMarkIcon,
-  Sparkles
+  StarIcon
 } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -118,7 +118,7 @@ const SidebarContent = ({ navigation, user, onLogout, onClose }) => {
       <div className="flex h-16 items-center px-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           <div className="bg-gradient-to-r from-primary-600 to-blue-600 p-2 rounded-lg">
-            <Sparkles className="h-5 w-5 text-white" />
+            <StarIcon className="h-5 w-5 text-white" />
           </div>
           <div>
             <h1 className="text-lg font-bold gradient-text">Speaker Portal</h1>
