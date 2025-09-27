@@ -1,7 +1,8 @@
 const express = require('express');
 const QRCode = require('qrcode');
+const crypto = require('crypto');
 const { auth, requireSpeaker, requireEventManager } = require('../middleware/auth');
-const { updateInJsonFile, findInJsonFile } = require('../utils/fileUtils');
+const { updateInJsonFile, findInJsonFile, readJsonFile, writeJsonFile } = require('../utils/fileUtils');
 
 const router = express.Router();
 
@@ -115,6 +116,68 @@ router.post('/scan', auth, requireEventManager, async (req, res) => {
       return res.status(400).json({ message: 'Invalid QR code data' });
     }
     
+    // Handle session QR codes
+    if (parsedData.sessionId) {
+      const { sessionId, speakerId, hash } = parsedData;
+      
+      if (!sessionId || !speakerId || !hash) {
+        return res.status(400).json({ message: 'Incomplete QR code data' });
+      }
+      
+      // Verify hash
+      const expectedHash = crypto.createHash('sha256')
+        .update(`${sessionId}-${speakerId}-${process.env.JWT_SECRET}`)
+        .digest('hex');
+      
+      if (hash !== expectedHash) {
+        return res.status(400).json({ message: 'Invalid QR code - security verification failed' });
+      }
+      
+      const session = await findInJsonFile('sessions.json', s => s.id === sessionId);
+      if (!session) {
+        return res.status(404).json({ message: 'Session not found' });
+      }
+      
+      const speaker = await findInJsonFile('users.json', u => u.id === speakerId);
+      if (!speaker) {
+        return res.status(404).json({ message: 'Speaker not found' });
+      }
+      
+      // Record scan
+      let scanHistory = [];
+      try {
+        scanHistory = await readJsonFile('qrScans.json');
+      } catch (error) {
+        // File doesn't exist, start with empty array
+      }
+      
+      const scanRecord = {
+        id: `scan-${Date.now()}`,
+        sessionId,
+        speakerId,
+        scanTime: new Date().toISOString(),
+        scannedBy: req.user.id,
+        type: 'session_verification'
+      };
+      
+      scanHistory.unshift(scanRecord);
+      await writeJsonFile('qrScans.json', scanHistory);
+      
+      return res.json({
+        message: 'Session QR code scanned successfully',
+        session: {
+          id: session.id,
+          title: session.title,
+          speaker: speaker.name,
+          timeSlot: session.timeSlot,
+          room: session.room,
+          track: session.assignedTrack
+        },
+        scanTime: scanRecord.scanTime
+      });
+    }
+    
+    // Handle legacy speaker QR codes
     const { speakerId, type } = parsedData;
     
     if (!speakerId || !type) {

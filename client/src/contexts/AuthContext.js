@@ -17,15 +17,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  useEffect(() => {
-    // Check if user is logged in on app start
-    if (token) {
-      validateToken();
-    } else {
-      setLoading(false);
-    }
-  }, []);
-
   const validateToken = async () => {
     try {
       // If we have a token, we assume it's valid and decode user info
@@ -42,9 +33,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    // Check if user is logged in on app start
+    if (token) {
+      validateToken();
+    } else {
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const login = async (email, password) => {
     try {
+      console.log('Attempting login with:', { email, password: '***' });
       const response = await authAPI.login({ email, password });
+      console.log('Login response:', response.data);
+      
       const { token, user } = response.data;
       
       // Store token and user data
@@ -57,7 +61,24 @@ export const AuthProvider = ({ children }) => {
       toast.success('Login successful!');
       return { success: true, user };
     } catch (error) {
-      const message = error.response?.data?.message || 'Login failed';
+      console.error('Login error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        url: error.config?.url
+      });
+      
+      let message = 'Login failed';
+      if (error.response?.status === 404) {
+        message = 'Server not found. Please ensure the backend is running.';
+      } else if (error.response?.status === 500) {
+        message = 'Server error. Please try again later.';
+      } else if (error.response?.data?.message) {
+        message = error.response.data.message;
+      } else if (error.message.includes('Network Error')) {
+        message = 'Cannot connect to server. Please check your connection and ensure the backend is running.';
+      }
+      
       toast.error(message);
       return { success: false, error: message };
     }

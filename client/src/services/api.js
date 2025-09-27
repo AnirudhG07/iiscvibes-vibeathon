@@ -78,9 +78,13 @@ export const eventManagerAPI = {
 export const agendaAPI = {
   getAgenda: () => api.get('/agenda'),
   getDraftAgenda: () => api.get('/agenda/draft'),
+  getBuilder: () => api.get('/agenda/builder'),
   updateAgenda: (data) => api.put('/agenda', data),
   publishAgenda: () => api.post('/agenda/publish'),
   addAgendaItem: (data) => api.post('/agenda/item', data),
+  updateAgendaItem: (id, data) => api.put(`/agenda/item/${id}`, data),
+  deleteAgendaItem: (id) => api.delete(`/agenda/item/${id}`),
+  importSessions: () => api.post('/agenda/import-sessions'),
 };
 
 // QR Code API
