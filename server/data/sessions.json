@@ -23,5 +23,28 @@
     "documentsUploaded": false,
     "createdAt": "2025-01-15T10:30:00.000Z",
     "updatedAt": "2025-01-20T14:15:00.000Z"
+  },
+  {
+    "id": "ad156e6b-d4aa-44c4-8437-d36973bd2ceb",
+    "speakerId": "demo-speaker-001",
+    "speakerName": "Demo Speaker",
+    "speakerEmail": "demo.speaker@vibeathon.com",
+    "title": "bruh bruh bruh bruh bruh",
+    "abstract": "this is just a test session this is just a test session this is just a test session",
+    "category": "Panel Discussion",
+    "track": "Track 3 - AI & Machine Learning",
+    "duration": 45,
+    "coSpeaker": null,
+    "requirements": "nothing",
+    "targetAudience": null,
+    "status": "pending",
+    "reviewFeedback": null,
+    "assignedTrack": null,
+    "timeSlot": null,
+    "room": null,
+    "submissionDate": "2025-09-27T07:48:27.242Z",
+    "lastModified": "2025-09-27T07:48:27.242Z",
+    "createdAt": "2025-09-27T07:48:27.242Z",
+    "updatedAt": "2025-09-27T07:48:27.242Z"
   }
 ]
