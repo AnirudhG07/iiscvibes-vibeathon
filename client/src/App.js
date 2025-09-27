@@ -84,9 +84,9 @@ const App = () => {
               <Route path="documents" element={<Documents />} />
             </Route>
 
-            {/* Event Manager Routes - Accessible by both event managers and admins */}
+            {/* Event Manager Routes - Accessible by both organizers and admins */}
             <Route path="/event-manager" element={
-              <ProtectedRoute allowedRoles={['event_manager', 'admin']}>
+              <ProtectedRoute allowedRoles={['organizer', 'admin']}>
                 <EventManagerLayout />
               </ProtectedRoute>
             }>

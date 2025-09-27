@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { motion } from 'framer-motion';
+import { QrCode, Download, Eye, Calendar, MapPin, Clock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import api from '../../services/api';
 
 const MySessions = () => {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [qrModal, setQrModal] = useState(false);
+  const [selectedSession, setSelectedSession] = useState(null);
   const { token } = useAuth();
 
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const response = await axios.get('/api/sessions/my-sessions', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setSessions(response.data.sessions);
+        console.log('Fetching sessions...');
+        const response = await api.get('/sessions/my-sessions');
+        console.log('Sessions response:', response.data);
+        setSessions(response.data.sessions || []);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch sessions. Please try again later.');
+        console.error('Error fetching sessions:', err);
+        setError('Failed to fetch sessions: ' + (err.response?.data?.message || err.message));
         setLoading(false);
       }
     };
 
     fetchSessions();
-  }, [token]);
+  }, []);
 
   // Status Badge component
   const StatusBadge = ({ status }) => {
@@ -48,6 +53,18 @@ const MySessions = () => {
         {status.replace('_', ' ')}
       </span>
     );
+  };
+
+  const downloadQRCode = (session) => {
+    const link = document.createElement('a');
+    link.download = `session-qr-${session.id}.png`;
+    link.href = session.qrCode;
+    link.click();
+  };
+
+  const openQRModal = (session) => {
+    setSelectedSession(session);
+    setQrModal(true);
   };
 
   if (loading) {
@@ -149,6 +166,40 @@ const MySessions = () => {
                           <p className="text-sm text-gray-600">{session.reviewFeedback}</p>
                         </div>
                       )}
+
+                      {/* QR Code Section for Approved Sessions */}
+                      {console.log('Session:', session.id, 'Status:', session.status, 'QR Code:', !!session.qrCode)}
+                      {session.status === 'approved' && session.qrCode && (
+                        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h4 className="text-sm font-medium text-green-900 mb-1 flex items-center">
+                                <QrCode className="w-4 h-4 mr-2" />
+                                Session QR Code Available
+                              </h4>
+                              <p className="text-sm text-green-700">
+                                Your session QR code is ready. Show this to organizers for verification.
+                              </p>
+                            </div>
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => openQRModal(session)}
+                                className="inline-flex items-center px-3 py-1 border border-green-300 rounded-md text-sm font-medium text-green-700 bg-white hover:bg-green-50"
+                              >
+                                <Eye className="w-4 h-4 mr-1" />
+                                View
+                              </button>
+                              <button
+                                onClick={() => downloadQRCode(session)}
+                                className="inline-flex items-center px-3 py-1 border border-green-300 rounded-md text-sm font-medium text-green-700 bg-white hover:bg-green-50"
+                              >
+                                <Download className="w-4 h-4 mr-1" />
+                                Download
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   
@@ -171,6 +222,75 @@ const MySessions = () => {
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {/* QR Code Modal */}
+        {qrModal && selectedSession && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-white rounded-lg max-w-md w-full p-6"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Session QR Code</h2>
+                <button
+                  onClick={() => setQrModal(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="text-center">
+                <div className="bg-white rounded-lg p-4 border border-gray-200 mb-4">
+                  <img 
+                    src={selectedSession.qrCode} 
+                    alt="Session QR Code" 
+                    className="w-48 h-48 mx-auto"
+                  />
+                </div>
+
+                <div className="bg-gray-50 rounded-lg p-4 mb-4 text-left">
+                  <h3 className="font-semibold text-gray-900 mb-2">{selectedSession.title}</h3>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      {selectedSession.timeSlot || 'Time TBD'}
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      {selectedSession.room || 'Room TBD'}
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="w-4 h-4 mr-2" />
+                      {selectedSession.duration} minutes
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-600 mb-4">
+                  Show this QR code to event organizers for session verification and check-in.
+                </p>
+
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => downloadQRCode(selectedSession)}
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                  </button>
+                  <button
+                    onClick={() => setQrModal(false)}
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </motion.div>
           </div>
         )}
       </div>
