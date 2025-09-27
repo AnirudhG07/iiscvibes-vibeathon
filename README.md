@@ -9,7 +9,6 @@ A comprehensive event management system designed for speakers and event managers
 - **Document Upload**: Share presentations and materials
 - **Agenda Access**: View published event schedule
 - **QR Code Generation**: Check-in and t-shirt collection
-- **Certificate Download**: Post-event certificate access
 - **Real-time Notifications**: Email and in-app updates
 
 ### For Event Managers
@@ -39,12 +38,12 @@ A comprehensive event management system designed for speakers and event managers
 
 2. **Install all dependencies**
    ```bash
-   npm run install-all
+   npm run install
    ```
 
 3. **Start the development servers**
    ```bash
-   npm run dev
+   npm run dev # or npm start
    ```
 
 4. **Access the application**
@@ -165,6 +164,12 @@ All features are fully functional and demo-ready:
 - Sample data included
 - Intuitive navigation
 - Professional presentation mode
+
+## Contributors
+- [Anirudh Gupta](https://github.com/AnirudhG07)
+- [Aditya Arsh](https://github.com/chocabloc)
+- [Omkaar](https://github.com/ombucha)
+- [Palak Raisinghani](https://github.com/Pal-R-S)
 
 ## 📝 License
 
