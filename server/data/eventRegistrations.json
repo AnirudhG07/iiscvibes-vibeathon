@@ -1,0 +1,24 @@
+[
+  {
+    "eventId": "vibeathon-2025",
+    "userId": "user-002",
+    "userName": "Jane Smith",
+    "userEmail": "jane.smith@example.com",
+    "userRole": "user",
+    "ticketId": "ticket-vibeathon-2025-user-002-1698765432000",
+    "registeredAt": "2025-01-15T10:30:00.000Z",
+    "status": "confirmed",
+    "checkedIn": false
+  },
+  {
+    "eventId": "ai-workshop-2025",
+    "userId": "user-003",
+    "userName": "Michael Johnson",
+    "userEmail": "michael.johnson@example.com",
+    "userRole": "user",
+    "ticketId": "ticket-ai-workshop-2025-user-003-1698765432001",
+    "registeredAt": "2025-01-18T14:20:00.000Z",
+    "status": "confirmed",
+    "checkedIn": true
+  }
+]

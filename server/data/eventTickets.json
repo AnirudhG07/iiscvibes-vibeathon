@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ticket-vibeathon-2025-user-002-1698765432000",
+    "eventId": "vibeathon-2025",
+    "userId": "user-002",
+    "userName": "Jane Smith",
+    "userEmail": "jane.smith@example.com",
+    "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
+    "ticketData": "{\"ticketId\":\"ticket-vibeathon-2025-user-002-1698765432000\",\"eventId\":\"vibeathon-2025\",\"userId\":\"user-002\",\"userName\":\"Jane Smith\",\"userEmail\":\"jane.smith@example.com\",\"type\":\"event-ticket\",\"generatedAt\":\"2025-01-15T10:30:00.000Z\",\"securityHash\":\"abc123def456\"}",
+    "status": "active",
+    "isUsed": false,
+    "generatedAt": "2025-01-15T10:30:00.000Z",
+    "usedAt": null,
+    "scannedBy": null
+  },
+  {
+    "id": "ticket-ai-workshop-2025-user-003-1698765432001",
+    "eventId": "ai-workshop-2025",
+    "userId": "user-003",
+    "userName": "Michael Johnson",
+    "userEmail": "michael.johnson@example.com",
+    "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
+    "ticketData": "{\"ticketId\":\"ticket-ai-workshop-2025-user-003-1698765432001\",\"eventId\":\"ai-workshop-2025\",\"userId\":\"user-003\",\"userName\":\"Michael Johnson\",\"userEmail\":\"michael.johnson@example.com\",\"type\":\"event-ticket\",\"generatedAt\":\"2025-01-18T14:20:00.000Z\",\"securityHash\":\"def456ghi789\"}",
+    "status": "active",
+    "isUsed": true,
+    "generatedAt": "2025-01-18T14:20:00.000Z",
+    "usedAt": "2025-02-10T10:15:00.000Z",
+    "scannedBy": "admin-user-001"
+  }
+]

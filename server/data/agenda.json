@@ -1,0 +1,69 @@
+[
+  {
+    "id": "agenda-001",
+    "eventName": "Vibeathon 2025",
+    "eventDate": "2025-12-15",
+    "published": true,
+    "schedule": [
+      {
+        "id": "item-001",
+        "type": "registration",
+        "title": "Registration & Welcome Coffee",
+        "startTime": "08:00",
+        "endTime": "09:00",
+        "track": null,
+        "room": "Lobby",
+        "sessionId": null,
+        "description": "Check-in, t-shirt collection, and networking over coffee",
+        "createdAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "item-002",
+        "type": "keynote",
+        "title": "Opening Keynote: The Future of Technology",
+        "startTime": "09:00",
+        "endTime": "09:30",
+        "track": "Main Stage",
+        "room": "Main Auditorium",
+        "sessionId": null,
+        "description": "Welcome address and vision for the future",
+        "createdAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "item-003",
+        "type": "session",
+        "title": "The Future of AI in Enterprise Applications",
+        "startTime": "10:00",
+        "endTime": "10:45",
+        "track": "Track 3",
+        "room": "Conference Hall A",
+        "sessionId": "session-001",
+        "description": null,
+        "createdAt": "2025-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "item-004",
+        "type": "break",
+        "title": "Coffee Break & Networking",
+        "startTime": "10:45",
+        "endTime": "11:15",
+        "track": null,
+        "room": "Lobby",
+        "sessionId": null,
+        "description": "Refreshments and networking opportunity",
+        "createdAt": "2025-01-01T00:00:00.000Z"
+      }
+    ],
+    "tracks": [
+      "Track 1 - Technology Innovation",
+      "Track 2 - Digital Transformation", 
+      "Track 3 - AI & Machine Learning",
+      "Track 4 - Cloud & DevOps",
+      "Track 5 - Data & Analytics"
+    ],
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-20T15:00:00.000Z",
+    "publishedAt": "2025-01-20T15:00:00.000Z",
+    "publishedBy": "admin-user-001"
+  }
+]
