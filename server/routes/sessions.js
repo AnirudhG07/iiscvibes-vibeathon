@@ -1,4 +1,6 @@
 const express = require('express');
+const QRCode = require('qrcode');
+const crypto = require('crypto');
 const { auth, requireSpeaker, requireEventManager } = require('../middleware/auth');
 const { validateRequest, schemas } = require('../middleware/validation');
 const { addToJsonFile, updateInJsonFile, filterInJsonFile, findInJsonFile } = require('../utils/fileUtils');
@@ -181,6 +183,22 @@ router.put('/:sessionId/review', auth, requireEventManager, validateRequest(sche
       updates.assignedTrack = assignedTrack;
       updates.timeSlot = timeSlot;
       updates.room = room || null;
+      
+      // Generate QR code for approved session
+      const qrData = {
+        sessionId: sessionId,
+        speakerId: session.speakerId,
+        title: session.title,
+        timeSlot: timeSlot,
+        room: room,
+        hash: crypto.createHash('sha256').update(`${sessionId}-${session.speakerId}-${process.env.JWT_SECRET}`).digest('hex')
+      };
+      
+      const qrCodeData = JSON.stringify(qrData);
+      const qrCodeImage = await QRCode.toDataURL(qrCodeData);
+      
+      updates.qrCode = qrCodeImage;
+      updates.qrData = qrData;
     }
 
     const updatedSession = await updateInJsonFile('sessions.json', sessionId, updates);
@@ -298,6 +316,73 @@ router.get('/change-requests', auth, requireEventManager, async (req, res) => {
   } catch (error) {
     console.error('Get change requests error:', error);
     res.status(500).json({ message: 'Failed to fetch change requests', error: error.message });
+  }
+});
+
+// Scan session QR code (Event Manager only)
+router.post('/scan-qr', auth, requireEventManager, async (req, res) => {
+  try {
+    const { qrData } = req.body;
+    
+    if (!qrData) {
+      return res.status(400).json({ message: 'QR data is required' });
+    }
+
+    let parsedData;
+    try {
+      parsedData = typeof qrData === 'string' ? JSON.parse(qrData) : qrData;
+    } catch (error) {
+      return res.status(400).json({ message: 'Invalid QR code format' });
+    }
+
+    const { sessionId, speakerId, hash } = parsedData;
+
+    if (!sessionId || !speakerId || !hash) {
+      return res.status(400).json({ message: 'Invalid QR code data' });
+    }
+
+    // Find the session
+    const session = await findInJsonFile('sessions.json', s => s.id === sessionId);
+    if (!session) {
+      return res.status(404).json({ message: 'Session not found' });
+    }
+
+    // Verify hash
+    const expectedHash = crypto.createHash('sha256').update(`${sessionId}-${speakerId}-${process.env.JWT_SECRET}`).digest('hex');
+    if (hash !== expectedHash) {
+      return res.status(400).json({ message: 'Invalid QR code - security verification failed' });
+    }
+
+    // Check if session is approved
+    if (session.status !== 'approved') {
+      return res.status(400).json({ message: 'Session is not approved' });
+    }
+
+    // Update session to mark as checked in
+    const updates = {
+      checkedIn: true,
+      checkedInAt: new Date().toISOString(),
+      checkedInBy: req.user.id
+    };
+
+    const updatedSession = await updateInJsonFile('sessions.json', sessionId, updates);
+
+    res.json({
+      message: 'Session QR code verified successfully',
+      session: {
+        id: updatedSession.id,
+        title: updatedSession.title,
+        speakerName: updatedSession.speakerName,
+        timeSlot: updatedSession.timeSlot,
+        room: updatedSession.room,
+        track: updatedSession.assignedTrack,
+        checkedIn: updatedSession.checkedIn,
+        checkedInAt: updatedSession.checkedInAt
+      }
+    });
+  } catch (error) {
+    console.error('QR scan error:', error);
+    res.status(500).json({ message: 'QR scan failed', error: error.message });
   }
 });
 

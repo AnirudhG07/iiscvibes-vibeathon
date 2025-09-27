@@ -92,7 +92,8 @@ const schemas = {
       is: 'approved',
       then: Joi.required(),
       otherwise: Joi.optional()
-    })
+    }),
+    room: Joi.string().allow('').optional()
   })
 };
 
