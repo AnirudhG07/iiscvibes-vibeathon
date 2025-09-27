@@ -10,22 +10,8 @@ import RegisterPage from './pages/RegisterPage';
 import FeedbackForm from './pages/FeedbackForm';
 
 // Protected pages
-import SpeakerDashboard from './pages/speaker/Dashboard';
-import SpeakerProfile from './pages/speaker/Profile';
-import SessionSubmission from './pages/speaker/SessionSubmission';
-import MySessions from './pages/speaker/MySessions';
-import Agenda from './pages/speaker/Agenda';
-import SpeakerApplications from './pages/SpeakerApplications';
-import Documents from './pages/speaker/Documents';
-
-import EventManagerDashboard from './pages/eventManager/Dashboard';
-import SessionReview from './pages/eventManager/SessionReview';
-import AgendaBuilder from './pages/eventManager/AgendaBuilder';
-import SpeakerManagement from './pages/eventManager/SpeakerManagement';
-import ChangeRequests from './pages/eventManager/ChangeRequests';
-import FeedbackAnalytics from './pages/eventManager/FeedbackAnalytics';
-import QRScanner from './pages/eventManager/QRScanner';
-import Communications from './pages/eventManager/Communications';
+import UserDashboard from './pages/UserDashboard';
+import UserTickets from './pages/UserTickets';
 
 // Admin pages
 import AdminDashboard from './pages/AdminDashboard';
@@ -34,11 +20,10 @@ import AdminUserManagement from './pages/AdminUserManagement';
 import AdminEventManagement from './pages/AdminEventManagement';
 import AdminApplicationManagement from './pages/AdminApplicationManagement';
 import AdminSettings from './pages/AdminSettings';
+import AdminQRScanner from './pages/AdminQRScanner';
 
 // Layout components
 import AdminLayout from './components/layout/AdminLayout';
-import SpeakerLayout from './components/layout/SpeakerLayout';
-import EventManagerLayout from './components/layout/EventManagerLayout';
 import PublicLayout from './components/layout/PublicLayout';
 
 // Protected Route component
@@ -76,36 +61,18 @@ const App = () => {
             <Route path="/register" element={<PublicLayout><RegisterPage /></PublicLayout>} />
             <Route path="/feedback" element={<PublicLayout><FeedbackForm /></PublicLayout>} />
             
-            {/* Speaker Routes */}
-            <Route path="/speaker" element={
-              <ProtectedRoute allowedRoles={['speaker']}>
-                <SpeakerLayout />
+            {/* User Routes */}
+            <Route path="/user" element={
+              <ProtectedRoute allowedRoles={['user']}>
+                <UserDashboard />
               </ProtectedRoute>
-            }>
-              <Route index element={<SpeakerDashboard />} />
-              <Route path="profile" element={<SpeakerProfile />} />
-              <Route path="sessions/submit" element={<SessionSubmission />} />
-              <Route path="sessions" element={<MySessions />} />
-              <Route path="agenda" element={<Agenda />} />
-              <Route path="applications" element={<SpeakerApplications />} />
-              <Route path="documents" element={<Documents />} />
-            </Route>
-
-            {/* Event Manager Routes */}
-            <Route path="/event-manager" element={
-              <ProtectedRoute allowedRoles={['event_manager']}>
-                <EventManagerLayout />
+            } />
+            
+            <Route path="/user/tickets" element={
+              <ProtectedRoute allowedRoles={['user']}>
+                <UserTickets />
               </ProtectedRoute>
-            }>
-              <Route index element={<EventManagerDashboard />} />
-              <Route path="sessions" element={<SessionReview />} />
-              <Route path="agenda" element={<AgendaBuilder />} />
-              <Route path="speakers" element={<SpeakerManagement />} />
-              <Route path="change-requests" element={<ChangeRequests />} />
-              <Route path="feedback" element={<FeedbackAnalytics />} />
-              <Route path="qr-scanner" element={<QRScanner />} />
-              <Route path="communications" element={<Communications />} />
-            </Route>
+            } />
 
             {/* Admin Routes */}
             <Route path="/admin" element={
@@ -118,6 +85,7 @@ const App = () => {
               <Route path="events" element={<AdminEventManagement />} />
               <Route path="applications" element={<AdminApplicationManagement />} />
               <Route path="qr" element={<AdminQRManagement />} />
+              <Route path="qr-scanner" element={<AdminQRScanner />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
 

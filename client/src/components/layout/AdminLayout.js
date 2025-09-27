@@ -27,6 +27,7 @@ const AdminLayout = () => {
     { name: 'Event Management', href: '/admin/events', icon: CalendarIcon, current: location.pathname === '/admin/events' },
     { name: 'Applications', href: '/admin/applications', icon: DocumentTextIcon, current: location.pathname === '/admin/applications' },
     { name: 'QR Management', href: '/admin/qr', icon: QrCodeIcon, current: location.pathname === '/admin/qr' },
+    { name: 'QR Scanner', href: '/admin/qr-scanner', icon: CheckCircleIcon, current: location.pathname === '/admin/qr-scanner' },
     { name: 'Settings', href: '/admin/settings', icon: CogIcon, current: location.pathname === '/admin/settings' },
   ];
 
