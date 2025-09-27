@@ -109,4 +109,25 @@ export const feedbackAPI = {
   export: () => api.get('/feedback/export'),
 };
 
+// Events API
+export const eventsAPI = {
+  getAll: (params) => api.get('/events', { params }),
+  getUpcoming: () => api.get('/events/upcoming'),
+  getById: (id) => api.get(`/events/${id}`),
+  create: (data) => api.post('/events', data),
+  update: (id, data) => api.put(`/events/${id}`, data),
+  register: (id) => api.post(`/events/${id}/register`),
+  getRegistrations: (id) => api.get(`/events/${id}/registrations`),
+  getMyRegistrations: () => api.get('/events/my/registrations'),
+};
+
+// Admin API
+export const adminAPI = {
+  getPendingApprovals: () => api.get('/admin/pending-approvals'),
+  approveRole: (userId, action, reason) => api.put(`/admin/approve-role/${userId}`, { action, reason }),
+  getDashboardStats: () => api.get('/admin/dashboard-stats'),
+  getUsers: (params) => api.get('/admin/users', { params }),
+  updateUserStatus: (userId, isActive) => api.put(`/admin/users/${userId}/status`, { isActive }),
+};
+
 export default api;

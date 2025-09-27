@@ -1,0 +1,88 @@
+[
+  {
+    "id": "vibeathon-2025",
+    "name": "Vibeathon 2025",
+    "description": "The ultimate tech conference bringing together innovators, developers, and visionaries for an unforgettable experience.",
+    "startDate": "2025-03-15T09:00:00.000Z",
+    "endDate": "2025-03-17T18:00:00.000Z",
+    "location": "IISc Bangalore, India",
+    "venue": "J.N. Tata Auditorium, Indian Institute of Science",
+    "status": "upcoming",
+    "registrationOpen": true,
+    "maxAttendees": 1500,
+    "currentAttendees": 847,
+    "maxSpeakers": 50,
+    "currentSpeakers": 23,
+    "tracks": [
+      "Track 1 - Technology Innovation",
+      "Track 2 - AI & Machine Learning",
+      "Track 3 - Web Development",
+      "Track 4 - Mobile Development",
+      "Track 5 - DevOps & Cloud",
+      "Track 6 - Data Science"
+    ],
+    "sessionTypes": [
+      "Talk",
+      "Workshop",
+      "Panel Discussion",
+      "Demo",
+      "Lightning Talk"
+    ],
+    "organizers": [
+      "admin-user-001"
+    ],
+    "websiteUrl": "https://vibeathon2025.iiscvibes.com",
+    "socialMedia": {
+      "twitter": "@vibeathon2025",
+      "linkedin": "vibeathon-2025",
+      "instagram": "@vibeathon2025"
+    },
+    "sponsorshipTiers": [
+      "Platinum",
+      "Gold",
+      "Silver",
+      "Bronze"
+    ],
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-15T10:30:00.000Z"
+  },
+  {
+    "id": "tech-summit-2025",
+    "name": "Tech Summit 2025",
+    "description": "A focused summit on emerging technologies and startup ecosystem.",
+    "startDate": "2025-05-20T10:00:00.000Z",
+    "endDate": "2025-05-20T17:00:00.000Z",
+    "location": "IISc Bangalore, India",
+    "venue": "Faculty Hall, Indian Institute of Science",
+    "status": "upcoming",
+    "registrationOpen": true,
+    "maxAttendees": 500,
+    "currentAttendees": 123,
+    "maxSpeakers": 20,
+    "currentSpeakers": 8,
+    "tracks": [
+      "Startup Ecosystem",
+      "Emerging Technologies",
+      "Investment & Funding"
+    ],
+    "sessionTypes": [
+      "Talk",
+      "Panel Discussion",
+      "Pitch Session"
+    ],
+    "organizers": [
+      "admin-user-001"
+    ],
+    "websiteUrl": "https://techsummit2025.iiscvibes.com",
+    "socialMedia": {
+      "twitter": "@techsummit2025",
+      "linkedin": "tech-summit-2025"
+    },
+    "sponsorshipTiers": [
+      "Gold",
+      "Silver"
+    ],
+    "createdAt": "2025-01-10T00:00:00.000Z",
+    "updatedAt": "2025-01-20T14:20:00.000Z"
+  }
+]

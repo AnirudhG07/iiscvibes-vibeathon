@@ -13,6 +13,8 @@ const agendaRoutes = require('./routes/agenda');
 const notificationRoutes = require('./routes/notifications');
 const qrRoutes = require('./routes/qr');
 const feedbackRoutes = require('./routes/feedback');
+const eventsRoutes = require('./routes/events');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -50,6 +52,8 @@ app.use('/api/agenda', agendaRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/qr', qrRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/events', eventsRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

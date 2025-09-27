@@ -48,13 +48,19 @@ const requireRole = (roles) => {
 };
 
 const requireSpeaker = requireRole(['speaker']);
-const requireEventManager = requireRole(['event_manager']);
-const requireAny = requireRole(['speaker', 'event_manager']);
+const requireEventManager = requireRole(['event_manager']); // Keep for backward compatibility
+const requireAdmin = requireRole(['admin']);
+const requireOrganizer = requireRole(['organizer']);
+const requireApproved = requireRole(['speaker', 'organizer', 'admin']);
+const requireAny = requireRole(['speaker', 'event_manager', 'organizer', 'admin']);
 
 module.exports = {
   auth,
   requireRole,
   requireSpeaker,
   requireEventManager,
+  requireAdmin,
+  requireOrganizer,
+  requireApproved,
   requireAny
 };

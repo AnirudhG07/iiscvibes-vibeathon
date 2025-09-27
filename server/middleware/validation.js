@@ -20,18 +20,41 @@ const schemas = {
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
     mobile: Joi.string().pattern(/^[0-9]{10}$/).required(),
-    track: Joi.string().required(),
-    sessionCategory: Joi.string().required(),
-    tshirtSize: Joi.string().valid('XS', 'S', 'M', 'L', 'XL', 'XXL').required(),
+    requestedRole: Joi.string().valid('speaker', 'organizer').required(),
+    // Speaker-specific fields
+    track: Joi.string().when('requestedRole', {
+      is: 'speaker',
+      then: Joi.required(),
+      otherwise: Joi.optional()
+    }),
+    sessionCategory: Joi.string().when('requestedRole', {
+      is: 'speaker',
+      then: Joi.required(),
+      otherwise: Joi.optional()
+    }),
     speaker2Name: Joi.string().allow('').optional(),
     speaker2Email: Joi.string().email().allow('').optional(),
     speaker2TshirtSize: Joi.string().valid('XS', 'S', 'M', 'L', 'XL', 'XXL').allow('').optional(),
+    sapCommunityUrl: Joi.string().uri().allow('').optional(),
+    // Organizer-specific fields
+    organization: Joi.string().when('requestedRole', {
+      is: 'organizer',
+      then: Joi.required(),
+      otherwise: Joi.optional()
+    }),
+    position: Joi.string().when('requestedRole', {
+      is: 'organizer',
+      then: Joi.required(),
+      otherwise: Joi.optional()
+    }),
+    experience: Joi.string().allow('').optional(),
+    // Common fields
+    tshirtSize: Joi.string().valid('XS', 'S', 'M', 'L', 'XL', 'XXL').required(),
     foodChoice: Joi.string().valid('veg', 'non-veg').required(),
     bloodGroup: Joi.string().allow('').optional(),
     emergencyContactName: Joi.string().allow('').optional(),
     emergencyContactNumber: Joi.string().allow('').optional(),
-    linkedinProfile: Joi.string().uri().allow('').optional(),
-    sapCommunityUrl: Joi.string().uri().allow('').optional()
+    linkedinProfile: Joi.string().uri().allow('').optional()
   }),
 
   login: Joi.object({

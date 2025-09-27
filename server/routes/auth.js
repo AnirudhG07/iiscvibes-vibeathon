@@ -38,19 +38,27 @@ router.post('/register', validateRequest(schemas.register), async (req, res) => 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create user object
+    // Get requested role from body (default to speaker for backward compatibility)
+    const requestedRole = req.body.requestedRole || 'speaker';
+    
+    // Create user object with new role system
     const userData = {
       name,
       email,
       password: hashedPassword,
-      role: 'speaker',
+      role: 'user', // All new users start as 'user'
+      requestedRole, // The role they want to become
+      roleStatus: 'pending', // Needs admin approval
       mobile,
-      track,
-      sessionCategory,
+      track: requestedRole === 'speaker' ? track : null,
+      sessionCategory: requestedRole === 'speaker' ? sessionCategory : null,
       tshirtSize,
-      speaker2Name: speaker2Name || null,
-      speaker2Email: speaker2Email || null,
-      speaker2TshirtSize: speaker2TshirtSize || null,
+      speaker2Name: requestedRole === 'speaker' ? (speaker2Name || null) : null,
+      speaker2Email: requestedRole === 'speaker' ? (speaker2Email || null) : null,
+      speaker2TshirtSize: requestedRole === 'speaker' ? (speaker2TshirtSize || null) : null,
+      organization: requestedRole === 'organizer' ? req.body.organization : null,
+      position: requestedRole === 'organizer' ? req.body.position : null,
+      experience: requestedRole === 'organizer' ? req.body.experience : null,
       foodChoice,
       bloodGroup: bloodGroup || null,
       emergencyContactName: emergencyContactName || null,
@@ -61,7 +69,9 @@ router.post('/register', validateRequest(schemas.register), async (req, res) => 
       registrationCompleted: true,
       qrCodeGenerated: false,
       tshirtCollected: false,
-      checkedIn: false
+      checkedIn: false,
+      approvedBy: null,
+      approvedAt: null
     };
 
     // Save user
@@ -133,7 +143,9 @@ router.post('/login', validateRequest(schemas.login), async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        requestedRole: user.requestedRole,
+        roleStatus: user.roleStatus
       }
     });
   } catch (error) {
