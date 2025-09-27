@@ -75,9 +75,9 @@
     "name": "Pending User",
     "email": "pending.user@example.com",
     "password": "$2a$12$lm4Ftxco4yA.roMBsuLvzeNKrK3d8Lnl/d2x8xPC6m.GoNXf4ZEBq",
-    "role": "user",
+    "role": "speaker",
     "requestedRole": "speaker",
-    "roleStatus": "pending",
+    "roleStatus": "approved",
     "mobile": "9876543212",
     "track": "Track 2 - AI & Machine Learning",
     "sessionCategory": "Workshop",
@@ -86,9 +86,9 @@
     "linkedinProfile": "https://linkedin.com/in/pendinguser",
     "isActive": true,
     "registrationCompleted": true,
-    "approvedBy": null,
-    "approvedAt": null,
+    "approvedBy": "admin-user-001",
+    "approvedAt": "2025-01-15T15:00:00.000Z",
     "createdAt": "2025-01-15T14:00:00.000Z",
-    "updatedAt": "2025-01-15T14:00:00.000Z"
+    "updatedAt": "2025-01-15T15:00:00.000Z"
   }
 ]

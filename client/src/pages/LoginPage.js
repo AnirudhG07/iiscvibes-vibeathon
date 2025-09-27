@@ -29,10 +29,8 @@ const LoginPage = () => {
         // Redirect based on user role
         if (result.user.role === 'speaker') {
           navigate('/speaker', { replace: true });
-        } else if (result.user.role === 'event_manager') {
+        } else if (result.user.role === 'organizer' || result.user.role === 'admin') {
           navigate('/event-manager', { replace: true });
-        } else if (result.user.role === 'admin') {
-          navigate('/admin', { replace: true });
         } else {
           navigate(from, { replace: true });
         }
@@ -57,6 +55,8 @@ const LoginPage = () => {
       let demoCredentials;
       if (role === 'speaker') {
         demoCredentials = { email: 'demo.speaker@vibeathon.com', password: 'demo123' };
+      } else if (role === 'organizer') {
+        demoCredentials = { email: 'demo.organizer@vibeathon.com', password: 'demo123' };
       } else {
         demoCredentials = { email: 'admin@vibeathon.com', password: 'admin123' };
       }
@@ -65,10 +65,10 @@ const LoginPage = () => {
       if (result.success) {
         if (result.user.role === 'speaker') {
           navigate('/speaker', { replace: true });
-        } else if (result.user.role === 'event_manager') {
+        } else if (result.user.role === 'organizer' || result.user.role === 'admin') {
           navigate('/event-manager', { replace: true });
-        } else if (result.user.role === 'admin') {
-          navigate('/admin', { replace: true });
+        } else {
+          navigate('/', { replace: true });
         }
       }
     } catch (error) {

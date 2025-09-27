@@ -502,4 +502,52 @@ router.post('/tickets/scan', auth, requireRole(['admin']), async (req, res) => {
         location: event.location
       } : null,
       scan
-    });\n  } catch (error) {\n    console.error('Ticket scan error:', error);\n    res.status(500).json({ message: 'Ticket scan failed', error: error.message });\n  }\n});\n\n// Get all tickets for an event (admin only)\nrouter.get('/:id/tickets', auth, requireRole(['admin']), async (req, res) => {\n  try {\n    const { id: eventId } = req.params;\n    \n    let tickets = [];\n    try {\n      tickets = await readJsonFile('eventTickets.json');\n      tickets = tickets.filter(t => t.eventId === eventId);\n    } catch (error) {\n      // File doesn't exist, return empty array\n    }\n    \n    res.json({ tickets });\n  } catch (error) {\n    console.error('Get event tickets error:', error);\n    res.status(500).json({ message: 'Failed to fetch event tickets', error: error.message });\n  }\n});\n\n// Delete event (admin only)\nrouter.delete('/:id', auth, requireRole(['admin']), async (req, res) => {\n  try {\n    const { id } = req.params;\n    const events = await readJsonFile('events.json');\n    const eventIndex = events.findIndex(e => e.id === id);\n    \n    if (eventIndex === -1) {\n      return res.status(404).json({ message: 'Event not found' });\n    }\n    \n    events.splice(eventIndex, 1);\n    await writeJsonFile('events.json', events);\n    \n    res.json({ message: 'Event deleted successfully' });\n  } catch (error) {\n    console.error('Error deleting event:', error);\n    res.status(500).json({ message: 'Failed to delete event' });\n  }\n});\n\nmodule.exports = router;
+    });
+  } catch (error) {
+    console.error('Ticket scan error:', error);
+    res.status(500).json({ message: 'Ticket scan failed', error: error.message });
+  }
+});
+
+// Get all tickets for an event (admin only)
+router.get('/:id/tickets', auth, requireRole(['admin']), async (req, res) => {
+  try {
+    const { id: eventId } = req.params;
+    
+    let tickets = [];
+    try {
+      tickets = await readJsonFile('eventTickets.json');
+      tickets = tickets.filter(t => t.eventId === eventId);
+    } catch (error) {
+      // File doesn't exist, return empty array
+    }
+    
+    res.json({ tickets });
+  } catch (error) {
+    console.error('Get event tickets error:', error);
+    res.status(500).json({ message: 'Failed to fetch event tickets', error: error.message });
+  }
+});
+
+// Delete event (admin only)
+router.delete('/:id', auth, requireRole(['admin']), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const events = await readJsonFile('events.json');
+    const eventIndex = events.findIndex(e => e.id === id);
+    
+    if (eventIndex === -1) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    
+    events.splice(eventIndex, 1);
+    await writeJsonFile('events.json', events);
+    
+    res.json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    res.status(500).json({ message: 'Failed to delete event' });
+  }
+});
+
+module.exports = router;

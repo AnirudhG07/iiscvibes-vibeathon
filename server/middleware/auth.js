@@ -48,11 +48,11 @@ const requireRole = (roles) => {
 };
 
 const requireSpeaker = requireRole(['speaker']);
-const requireEventManager = requireRole(['event_manager', 'admin']); // Allow both event managers and admins
-const requireAdmin = requireRole(['admin']);
-const requireOrganizer = requireRole(['organizer']);
+const requireEventManager = requireRole(['organizer', 'admin']); // Allow both organizers and admins
+const requireAdmin = requireRole(['admin', 'organizer']); // Treat organizer and admin as same
+const requireOrganizer = requireRole(['organizer', 'admin']); // Allow both organizer and admin
 const requireApproved = requireRole(['speaker', 'organizer', 'admin']);
-const requireAny = requireRole(['speaker', 'event_manager', 'organizer', 'admin']);
+const requireAny = requireRole(['speaker', 'organizer', 'admin']);
 
 module.exports = {
   auth,

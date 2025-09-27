@@ -107,8 +107,9 @@ export const AuthProvider = ({ children }) => {
     updateUser,
     isAuthenticated: !!user,
     isSpeaker: user?.role === 'speaker',
-    isEventManager: user?.role === 'event_manager',
-    isAdmin: user?.role === 'admin'
+    isEventManager: user?.role === 'organizer' || user?.role === 'admin',
+    isAdmin: user?.role === 'admin',
+    isOrganizer: user?.role === 'organizer'
   };
 
   return (
