@@ -9,7 +9,7 @@ class EmailService {
     
     // Only initialize transporter if email credentials are available
     if (process.env.EMAIL_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      this.transporter = nodemailer.createTransporter({
+      this.transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
         secure: false,
@@ -54,19 +54,6 @@ class EmailService {
       console.error('Error logging email:', error);
       throw error;
     }
-  }er = require('nodemailer');
-
-class EmailService {
-  constructor() {
-    this.transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      secure: false,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
   }
 
   async sendEmail(to, subject, html, attachments = []) {
@@ -157,7 +144,7 @@ class EmailService {
         <p>We have received your session submission: <strong>"${sessionTitle}"</strong></p>
         <p>Our review committee will evaluate your submission and get back to you soon.</p>
         <p>You can track the status of your submission in your speaker dashboard.</p>
-        <p>Best regards,<br>${process.env.EVENT_NAME} Team</p>
+        <p>Best regards,<br>${process.env.EVENT_NAME || 'Vibeathon 2025'} Team</p>
       </div>
     `;
   }
@@ -174,7 +161,7 @@ class EmailService {
           <p><strong>Time Slot:</strong> ${timeSlot}</p>
         </div>
         <p>Please confirm your participation and prepare for an amazing event!</p>
-        <p>Best regards,<br>${process.env.EVENT_NAME} Team</p>
+        <p>Best regards,<br>${process.env.EVENT_NAME || 'Vibeathon 2025'} Team</p>
       </div>
     `;
   }
@@ -190,8 +177,8 @@ class EmailService {
           <h3>Feedback:</h3>
           <p>${feedback}</p>
         </div>` : ''}
-        <p>We encourage you to submit for future events and thank you for your interest in ${process.env.EVENT_NAME}.</p>
-        <p>Best regards,<br>${process.env.EVENT_NAME} Team</p>
+        <p>We encourage you to submit for future events and thank you for your interest in ${process.env.EVENT_NAME || 'Vibeathon 2025'}.</p>
+        <p>Best regards,<br>${process.env.EVENT_NAME || 'Vibeathon 2025'} Team</p>
       </div>
     `;
   }
@@ -204,7 +191,7 @@ class EmailService {
         <p>This is a friendly reminder to upload your presentation materials.</p>
         <p><strong>Deadline:</strong> ${new Date(deadline).toLocaleDateString()}</p>
         <p>Please log in to your speaker dashboard to upload your documents.</p>
-        <p>Best regards,<br>${process.env.EVENT_NAME} Team</p>
+        <p>Best regards,<br>${process.env.EVENT_NAME || 'Vibeathon 2025'} Team</p>
       </div>
     `;
   }
@@ -214,7 +201,7 @@ class EmailService {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #4f46e5;">🎪 Event Day Instructions</h2>
         <p>Dear ${speakerName},</p>
-        <p>We're excited to see you at ${process.env.EVENT_NAME}! Here are your event day details:</p>
+        <p>We're excited to see you at ${process.env.EVENT_NAME || 'Vibeathon 2025'}! Here are your event day details:</p>
         <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3>Important Information:</h3>
           <p><strong>Check-in Time:</strong> ${checkInTime}</p>
@@ -222,7 +209,7 @@ class EmailService {
           <p><strong>Your QR Code:</strong> Available in your speaker dashboard</p>
         </div>
         <p>Please arrive early for check-in and t-shirt collection. Don't forget to bring your QR code!</p>
-        <p>Best regards,<br>${process.env.EVENT_NAME} Team</p>
+        <p>Best regards,<br>${process.env.EVENT_NAME || 'Vibeathon 2025'} Team</p>
       </div>
     `;
   }

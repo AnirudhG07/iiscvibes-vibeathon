@@ -20,7 +20,7 @@ const adminRoutes = require('./routes/admin');
 const eventApplicationsRoutes = require('./routes/eventApplications');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 // Security middleware
 app.use(helmet());
